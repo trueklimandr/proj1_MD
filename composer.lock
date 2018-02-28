@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac36985d60ab3e5dd94efe18d3fa4dd3",
+    "content-hash": "334033c902bdee3f67509783edb5ae0d",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -2015,6 +2015,49 @@
                 "psr-3"
             ],
             "time": "2016-10-10T12:19:37+00:00"
+        },
+        {
+            "name": "saada/yii2-factory-muffin",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/saada/yii2-factory-muffin.git",
+                "reference": "9c3f57eebde54abbaced9af6dfa33ba5ff425432"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/saada/yii2-factory-muffin/zipball/9c3f57eebde54abbaced9af6dfa33ba5ff425432",
+                "reference": "9c3f57eebde54abbaced9af6dfa33ba5ff425432",
+                "shasum": ""
+            },
+            "require": {
+                "league/factory-muffin": "~3.0",
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "saada\\FactoryMuffin\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mahmoud Saada",
+                    "email": "mahmoudsaada@gmail.com"
+                }
+            ],
+            "description": "A Yii2 wrapper for league/factory-muffin with Gii generators.",
+            "homepage": "http://moody.website/yii2-factory-muffin/",
+            "keywords": [
+                "factory",
+                "testing",
+                "yii2"
+            ],
+            "time": "2016-12-24T15:16:17+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

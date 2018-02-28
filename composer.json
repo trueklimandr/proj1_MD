@@ -29,6 +29,7 @@
         "codeception/specify": "~0.4.3",
 
         "league/factory-muffin": "^3.0",
+        "saada/yii2-factory-muffin": "~2.0",
         "league/factory-muffin-faker": "^2.0"
     },
     "config": {
