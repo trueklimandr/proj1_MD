@@ -13,15 +13,15 @@ class ListOfDocsCest
 {
     public function getListOfZeroDocs(\FunctionalTester $I)
     {
-        $I->haveMultiple(Doctors::class, 5);
-        /*$I->sendGET('/doctors');
+        $I->haveMultiple(Doctors::class, 0);
+        $I->sendGET('/doctors');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse());
-        $I->assertEquals(0, count($response));*/
+        $I->assertEquals(0, count($response));
     }
 
-   /* public function getListOfFiveDocs(\FunctionalTester $I)
+    public function getListOfFiveDocs(\FunctionalTester $I)
     {
         $I->haveMultiple(Doctors::class, 5);
         $I->sendGET('doctors');
@@ -34,7 +34,6 @@ class ListOfDocsCest
             'firstname' => 'string',
             'lastname' => 'string',
             'spec' => 'string',
-        ],
-            '$.doctors[1]');
-    }*/
+        ]);
+    }
 }
