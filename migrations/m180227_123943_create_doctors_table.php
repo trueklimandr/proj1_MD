@@ -14,8 +14,8 @@ class m180227_123943_create_doctors_table extends Migration
     {
         $this->createTable('doctor', [
             'id' => $this->primaryKey(),
-            'firstname' => $this->string(255),
-            'lastname' => $this->string(255),
+            'firstName' => $this->string(255),
+            'lastName' => $this->string(255),
             'specialization' => $this->string(255),
         ]);
     }
