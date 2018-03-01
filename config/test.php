@@ -5,7 +5,7 @@ $db = require __DIR__ . '/test_db.php';
 /**
  * Application configuration shared by all test types
  */
-return [
+$test = [
     'id' => 'basic-tests',
     'basePath' => dirname(__DIR__),
     'aliases' => [
@@ -40,3 +40,10 @@ return [
     ],
     'params' => $params,
 ];
+
+$web = require __DIR__ . '/web.php';
+
+return \yii\helpers\ArrayHelper::merge(
+    $web,
+    $test
+);

@@ -14,7 +14,7 @@ class ListOfDocsCest
     public function getListOfZeroDocs(\FunctionalTester $I)
     {
         $I->haveMultiple(Doctors::class, 0);
-        $I->sendGET('/doctors');
+        $I->sendGET('doctors');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse());

@@ -16,6 +16,6 @@ modules:
           factories: tests/functional/factory
           depends: Yii2
       - REST:
-          depends: PhpBrowser
-          url: 'http://medic.local/'
+          depends: Yii2
+          url: '/'
       - Asserts
