@@ -9,7 +9,7 @@ namespace app\controllers;
 
 use yii\rest\ActiveController;
 
-class DoctorsController extends ActiveController
+class DoctorController extends ActiveController
 {
-    public $modelClass = 'app\models\Doctors';
+    public $modelClass = 'app\models\Doctor';
 }

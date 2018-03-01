@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Doctors;
+use app\models\Doctor;
 
 /**
  * Created by PhpStorm.
@@ -13,8 +13,8 @@ class ListOfDocsCest
 {
     public function getListOfZeroDocs(\FunctionalTester $I)
     {
-        $I->haveMultiple(Doctors::class, 0);
-        $I->sendGET('doctors');
+        $I->haveMultiple(Doctor::class, 0);
+        $I->sendGET('doctor');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse());
@@ -23,8 +23,8 @@ class ListOfDocsCest
 
     public function getListOfFiveDocs(\FunctionalTester $I)
     {
-        $I->haveMultiple(Doctors::class, 5);
-        $I->sendGET('doctors');
+        $I->haveMultiple(Doctor::class, 5);
+        $I->sendGET('doctor');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse());

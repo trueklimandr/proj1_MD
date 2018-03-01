@@ -9,6 +9,6 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 
-class Doctors extends ActiveRecord
+class Doctor extends ActiveRecord
 {
 }

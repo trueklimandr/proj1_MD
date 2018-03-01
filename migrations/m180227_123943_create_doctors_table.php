@@ -12,7 +12,7 @@ class m180227_123943_create_doctors_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('doctors', [
+        $this->createTable('doctor', [
             'id' => $this->primaryKey(),
             'firstname' => $this->string(255),
             'lastname' => $this->string(255),
@@ -25,6 +25,6 @@ class m180227_123943_create_doctors_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('doctors');
+        $this->dropTable('doctor');
     }
 }
