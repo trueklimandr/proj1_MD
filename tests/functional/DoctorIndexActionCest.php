@@ -9,11 +9,10 @@ use app\models\Doctor;
  * Time: 11:31
  */
 
-class ListOfDocsCest
+class DoctorIndexActionCest
 {
-    public function getListOfZeroDocs(\FunctionalTester $I)
+    public function testGettingListOfZeroDocs(\FunctionalTester $I)
     {
-        $I->haveMultiple(Doctor::class, 0);
         $I->sendGET('doctor');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
@@ -21,7 +20,7 @@ class ListOfDocsCest
         $I->assertEquals(0, count($response));
     }
 
-    public function getListOfFiveDocs(\FunctionalTester $I)
+    public function testGettingListOfFiveDocs(\FunctionalTester $I)
     {
         $I->haveMultiple(Doctor::class, 5);
         $I->sendGET('doctor');
@@ -33,7 +32,7 @@ class ListOfDocsCest
             'id' => 'integer',
             'firstname' => 'string',
             'lastname' => 'string',
-            'spec' => 'string',
+            'specialization' => 'string',
         ]);
     }
 }
