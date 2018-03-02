@@ -10,4 +10,12 @@ class_name: FunctionalTester
 modules:
     enabled:
       - Filesystem
-      - Yii2
+      - Yii2:
+          configFile: ./config/test.php
+      - DataFactory:
+          factories: tests/functional/factory
+          depends: Yii2
+      - REST:
+          depends: Yii2
+          url: '/'
+      - Asserts
