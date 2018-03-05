@@ -8,7 +8,7 @@
 namespace app\controllers;
 
 use yii\rest\ActiveController;
-use app\models\dbase\User;
+use app\models\User;
 
 class UserController extends ActiveController
 {

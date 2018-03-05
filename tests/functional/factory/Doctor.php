@@ -7,9 +7,12 @@
  */
 use League\FactoryMuffin\Faker\Facade as Faker;
 use app\models\Doctor;
+use app\models\User;
 
 $fm->define(Doctor::class)->setDefinitions([
-    'firstName' => Faker::firstName(),      // Set the firstname attribute to a random first name
-    'lastName'  => Faker::lastName(),       // Set the lastname attribute to a random last name
-    'specialization' => Faker::jobTitle(),       // Set the spec attribute to a random job
+    'userId' => function (Doctor $model) use ($fm) {
+        $user = $fm->create(User::class, ['type' => 'doctor']);
+        return $user->userId;
+    },      // Set the firstname attribute to a random first name
+    'specialization' => Faker::jobTitle(),  // Set the spec attribute to a random job
 ]);
