@@ -9,6 +9,7 @@
 namespace app\models;
 
 use yii\db\ActiveRecord;
+use yii;
 
 /**
  * Class Doctor for table doctor
@@ -22,6 +23,15 @@ use yii\db\ActiveRecord;
  */
 class User extends ActiveRecord
 {
+    public function beforeSave($insert)
+    {
+        if ($this->isNewRecord) {
+            $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+        }
+
+        return true;
+    }
+
     public function rules()
     {
         return [
