@@ -37,6 +37,18 @@ class UserAddActionCest
         $I->dontSeeResponseCodeIs(201);
     }
 
+    public function testAddSameEmailUser(\FunctionalTester $I)
+    {
+        $I->sendPOST('users', [
+            'firstName' => 'Fedor',
+            'lastName'  => 'Zubkov',
+            'email' => 'zub123mail.ru',
+            'password' => 'parol-karol',
+            'type' => 'user',
+        ]);
+        $I->dontSeeResponseCodeIs(201);
+    }
+
     public function testAddEmptyPasswordUser(\FunctionalTester $I)
     {
         $I->sendPOST('users', [
