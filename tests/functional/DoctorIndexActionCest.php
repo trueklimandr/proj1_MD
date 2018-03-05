@@ -27,10 +27,9 @@ class DoctorIndexActionCest
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse());
         $I->assertEquals(5, count($response));
+        sleep(7);
         $I->seeResponseMatchesJsonType([
-            'id' => 'integer',
-            'firstName' => 'string',
-            'lastName' => 'string',
+            'doctorId' => 'integer',
             'specialization' => 'string',
         ]);
     }

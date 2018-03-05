@@ -29,14 +29,25 @@ class User extends ActiveRecord
                 [
                     'firstName',
                     'lastName',
-                    'specialization',
                     'email',
                     'password',
                     'type'
                 ],
                 'safe'
             ],
+            [
+                [
+                    'firstName',
+                    'lastName',
+                    'email',
+                    'password',
+                    'type'
+                ],
+                'required'
+            ],
+            ['type', 'in', 'range' => ['user', 'doctor']],
             ['email', 'email'],
+            ['email', 'unique']
         ];
     }
 

@@ -37,7 +37,7 @@ class UserAddActionCest
         $I->dontSeeResponseCodeIs(201);
     }
 
-    public function testAddSameEmailUser(\FunctionalTester $I)
+    public function testAddWrongEmailUser(\FunctionalTester $I)
     {
         $I->sendPOST('users', [
             'firstName' => 'Fedor',

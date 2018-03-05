@@ -22,8 +22,8 @@ class Doctor extends ActiveRecord
     public function rules()
     {
         return [
-            [['specialization'], 'safe'],
-            ['email', 'email'],
+            ['specialization', 'safe'],
+            ['specialization', 'required'],
         ];
     }
 
