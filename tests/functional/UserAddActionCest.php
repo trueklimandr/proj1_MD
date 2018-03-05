@@ -10,10 +10,18 @@ use app\models\User;
 
 class UserAddActionCest
 {
-    public function testAddNewUser(\FunctionalTester $I)
+    public function _before(\FunctionalTester $I)
     {
         User::deleteAll();
+    }
 
+    public function _after(\FunctionalTester $I)
+    {
+        User::deleteAll();
+    }
+
+    public function testAddNewUser(\FunctionalTester $I)
+    {
         $I->sendPOST('users', [
             'firstName' => 'Dmitry',
             'lastName'  => 'Kozlov',
@@ -34,6 +42,14 @@ class UserAddActionCest
             'password' => 'parol-marol',
             'type' => 'user',
             ]);
+        $I->seeResponseCodeIs(201);
+        $I->sendPOST('users', [
+            'firstName' => 'Fedor',
+            'lastName'  => 'Zubkov',
+            'email' => 'd.kozlov@mail.ru',
+            'password' => 'parol-karol',
+            'type' => 'user',
+        ]);
         $I->dontSeeResponseCodeIs(201);
     }
 
@@ -63,6 +79,14 @@ class UserAddActionCest
 
     public function testAddAnotherUser(\FunctionalTester $I)
     {
+        $I->sendPOST('users', [
+            'firstName' => 'Dmitry',
+            'lastName'  => 'Kozlov',
+            'email' => 'd.kozlov@mail.ru',
+            'password' => 'parol-karol',
+            'type' => 'user',
+        ]);
+        $I->seeResponseCodeIs(201);
         $I->sendPOST('users', [
             'firstName' => 'Ivan',
             'lastName'  => 'Korolev',
