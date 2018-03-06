@@ -10,12 +10,12 @@ use app\models\User;
 
 class UserAddActionCest
 {
-    public function _before(\FunctionalTester $I)
+    public function _before()
     {
         User::deleteAll();
     }
 
-    public function _after(\FunctionalTester $I)
+    public function _after()
     {
         User::deleteAll();
     }

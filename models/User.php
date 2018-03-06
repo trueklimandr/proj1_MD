@@ -13,7 +13,7 @@ use yii;
 
 /**
  * Class Doctor for table doctor
- * @package app\models\dbase
+ * @package app\models
  * @property int $userId
  * @property string $firstName
  * @property string $lastName
@@ -64,5 +64,10 @@ class User extends ActiveRecord
     public function getDoctor()
     {
         return $this->hasOne(Doctor::class, ['userId' => 'userId']);
+    }
+
+    public function getAccessToken()
+    {
+        return $this->hasOne(AccessToken::class, ['userId' => 'userId']);
     }
 }
