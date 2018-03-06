@@ -1,7 +1,4 @@
 <?php
-
-use app\models\Doctor;
-
 /**
  * Created by PhpStorm.
  * User: klimandr
@@ -9,11 +6,13 @@ use app\models\Doctor;
  * Time: 11:31
  */
 
+use app\models\Doctor;
+
 class DoctorIndexActionCest
 {
     public function testGettingListOfZeroDocs(\FunctionalTester $I)
     {
-        $I->sendGET('doctor');
+        $I->sendGET('doctors');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse());
@@ -23,15 +22,14 @@ class DoctorIndexActionCest
     public function testGettingListOfFiveDocs(\FunctionalTester $I)
     {
         $I->haveMultiple(Doctor::class, 5);
-        $I->sendGET('doctor');
+        $I->sendGET('doctors');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $response = json_decode($I->grabResponse());
         $I->assertEquals(5, count($response));
+        sleep(7);
         $I->seeResponseMatchesJsonType([
-            'id' => 'integer',
-            'firstname' => 'string',
-            'lastname' => 'string',
+            'doctorId' => 'integer',
             'specialization' => 'string',
         ]);
     }

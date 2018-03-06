@@ -12,12 +12,23 @@ use yii\db\ActiveRecord;
 /**
  * Class Doctor for table doctor
  * @package app\models
- * @property int $id
- * @property string $firstName
- * @property string $lastName
+ * @property int $doctorId
+ * @property int $userId
  * @property string $specialization
  */
 
 class Doctor extends ActiveRecord
 {
+    public function rules()
+    {
+        return [
+            ['specialization', 'safe'],
+            ['specialization', 'required'],
+        ];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['userId' => 'userId']);
+    }
 }
