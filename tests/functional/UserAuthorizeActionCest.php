@@ -19,33 +19,30 @@ class UserAuthorizeActionCest
 
     public function testGettingToken(\FunctionalTester $I)
     {
-        $I->haveMultiple(User::class, 2);
-        $I->sendPOST('users', [
+        $I->have(User::class, [
             'firstName' => 'Dmitry',
             'lastName'  => 'Kozlov',
             'email' => 'd.kozlov@mail.ru',
             'password' => 'parol-karol',
             'type' => 'user',
         ]);
-        $I->seeResponseCodeIs(201);
         $I->sendPOST('users/authorize', [
             'email' => 'd.kozlov@mail.ru',
             'password' => 'parol-karol'
             ]);
         $I->seeResponseCodeIs(201);
+        $I->seeResponseIsJson();
     }
 
     public function testGettingTokenByWrongUser(\FunctionalTester $I)
     {
-        $I->haveMultiple(User::class, 2);
-        $I->sendPOST('users', [
+        $I->have(User::class, [
             'firstName' => 'Dmitry',
             'lastName'  => 'Kozlov',
             'email' => 'd.kozlov@mail.ru',
             'password' => 'parol-karol',
             'type' => 'user',
         ]);
-        $I->seeResponseCodeIs(201);
         $I->sendPOST('users/authorize', [
             'email' => 'd_kozlov@mail.ru',
             'password' => 'parol-karol'
@@ -55,15 +52,13 @@ class UserAuthorizeActionCest
 
     public function testGettingTokenWithWrongPassword(\FunctionalTester $I)
     {
-        $I->haveMultiple(User::class, 2);
-        $I->sendPOST('users', [
+        $I->have(User::class, [
             'firstName' => 'Dmitry',
             'lastName'  => 'Kozlov',
             'email' => 'd.kozlov@mail.ru',
             'password' => 'parol-karol',
             'type' => 'user',
         ]);
-        $I->seeResponseCodeIs(201);
         $I->sendPOST('users/authorize', [
             'email' => 'd.kozlov@mail.ru',
             'password' => 'parol-karol123'

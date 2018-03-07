@@ -56,7 +56,7 @@ $config = [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'user',
                     'extraPatterns' => [
-                        'POST authorize' => 'gettoken',
+                        'POST authorize' => 'authorize',
                     ]
                 ]
             ],
