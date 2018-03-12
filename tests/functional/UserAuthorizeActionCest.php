@@ -6,15 +6,20 @@
  * Time: 9:53
  */
 
-use app\models\AccessToken;
 use app\models\User;
 
 class UserAuthorizeActionCest
 {
+    private $transaction;
+
     public function _before()
     {
-        AccessToken::deleteAll();
-        User::deleteAll();
+        $this->transaction = Yii::$app->db->beginTransaction();
+    }
+
+    public function _after()
+    {
+        $this->transaction->rollback();
     }
 
     public function testGettingToken(\FunctionalTester $I)

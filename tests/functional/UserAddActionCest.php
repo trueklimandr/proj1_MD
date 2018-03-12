@@ -7,17 +7,20 @@
  */
 
 use app\models\User;
+use app\models\AccessToken;
 
 class UserAddActionCest
 {
+    private $transaction;
+
     public function _before()
     {
-        User::deleteAll();
+        $this->transaction = Yii::$app->db->beginTransaction();
     }
 
     public function _after()
     {
-        User::deleteAll();
+        $this->transaction->rollback();
     }
 
     public function testAddNewUser(\FunctionalTester $I)

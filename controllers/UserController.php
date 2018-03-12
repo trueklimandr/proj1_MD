@@ -10,7 +10,6 @@ namespace app\controllers;
 use yii\base\Module;
 use yii\rest\ActiveController;
 use app\models\User;
-use app\models\AccessToken;
 use Yii;
 use yii\web\ServerErrorHttpException;
 use yii\web\HttpException;
@@ -25,9 +24,10 @@ class UserController extends ActiveController
 
     public function __construct(string $id,
                                 Module $module,
-                                array $config = [],
                                 UserService $userService,
-                                AccessTokenService $accessTokenService)
+                                AccessTokenService $accessTokenService,
+                                array $config = []
+                                )
     {
         parent::__construct($id, $module, $config);
         $this->userService = $userService;

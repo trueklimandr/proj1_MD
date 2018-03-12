@@ -10,6 +10,18 @@ use app\models\Doctor;
 
 class DoctorIndexActionCest
 {
+    private $transaction;
+
+    public function _before()
+    {
+        $this->transaction = Yii::$app->db->beginTransaction();
+    }
+
+    public function _after()
+    {
+        $this->transaction->rollback();
+    }
+
     public function testGettingListOfZeroDocs(\FunctionalTester $I)
     {
         $I->sendGET('doctors');
