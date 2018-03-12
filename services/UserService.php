@@ -33,6 +33,7 @@ class UserService
     {
         return Yii::$app->getSecurity()->validatePassword(
             $enteringPassword,
-            $user->password);
+            $user->password
+        );
     }
 }

@@ -49,23 +49,16 @@ class UserController extends ActiveController
             throw new HttpException(401,'Unauthorized. Check your login');
         }
 
-        if (!$this->userService->validateUserPassword(
-            $user,
-            $request->getBodyParam('password')
-        )) {
+        $isPasswordCorrect = $this->userService->validateUserPassword($user, $request->getBodyParam('password'));
+        if (!$isPasswordCorrect) {
             throw new HttpException(401,'Unauthorized. Check your login/password');
         }
 
-        $modelOfToken = $this->accessTokenService->findAccessTokenByUserId($user);
-        $finalModelOfToken = $this->
-        accessTokenService->
-        makeModelWithToken($user, $modelOfToken);
+        $accessToken = $this->accessTokenService->findAccessTokenByUserId($user);
+        $finalAccessToken = $this->accessTokenService->createOrUpdateAccessToken($user, $accessToken);
 
-        if ($finalModelOfToken->save()) {
-            $response->setStatusCode(201);
-        } elseif (!$finalModelOfToken->hasErrors()) {
-            throw new HttpException(500,'Unknown server error');
-        }
-        return (isset($finalModelOfToken)) ? $finalModelOfToken : null;
+        $response->setStatusCode(201);
+
+        return (isset($finalAccessToken)) ? $finalAccessToken : null;
     }
 }

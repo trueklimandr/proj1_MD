@@ -11,6 +11,7 @@ namespace app\services;
 use app\models\AccessToken;
 use \app\models\User;
 use Yii;
+use yii\web\HttpException;
 
 class AccessTokenService
 {
@@ -27,21 +28,23 @@ class AccessTokenService
 
     /**
      * @param User $user
-     * @param AccessToken|null $modelOfToken
+     * @param AccessToken|null $accessToken
      * @return AccessToken|null
      * @throws \yii\base\Exception
      */
-    public function makeModelWithToken(User $user, $modelOfToken)
+    public function createOrUpdateAccessToken(User $user, ?AccessToken $accessToken)
     {
-        if ($modelOfToken == null) {
-            $model = new AccessToken();
-            $model->token = Yii::$app->security->generateRandomString();
-            $model->userId = $user->userId;
-            $model_final = $model;
-        } elseif ($modelOfToken->userId == $user->userId) {
-            $modelOfToken->token = Yii::$app->security->generateRandomString();
-            $model_final = $model2;
+        if ($accessToken == null) {
+            $accessToken = new AccessToken();
+            $accessToken->token = Yii::$app->security->generateRandomString();
+            $accessToken->userId = $user->userId;
+        } else {
+            $accessToken->token = Yii::$app->security->generateRandomString();
         }
-        return (isset($model_final)) ? $model_final : null;
+
+        if (!$accessToken->save() && !$accessToken->hasErrors()) {
+            throw new HttpException(500,'Unknown server error');
+        }
+        return (isset($accessToken)) ? $accessToken : null;
     }
 }

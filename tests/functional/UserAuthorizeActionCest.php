@@ -41,6 +41,12 @@ class UserAuthorizeActionCest
             'token' => 'string',
             'userId' => 'integer'
         ]);
+        $I->seeRecord('app\models\AccessToken');
+        $response = json_decode($I->grabResponse());
+        $I->seeRecord('app\models\AccessToken', [
+            'userId' => $response->userId,
+            'token' => $response->token
+            ]);
     }
 
     public function testAuthorizeByWrongUser(\FunctionalTester $I)
