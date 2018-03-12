@@ -22,7 +22,7 @@ class UserAuthorizeActionCest
         $this->transaction->rollback();
     }
 
-    public function testGettingToken(\FunctionalTester $I)
+    public function testAuthorize(\FunctionalTester $I)
     {
         $I->have(User::class, [
             'firstName' => 'Dmitry',
@@ -37,9 +37,13 @@ class UserAuthorizeActionCest
             ]);
         $I->seeResponseCodeIs(201);
         $I->seeResponseIsJson();
+        $I->seeResponseMatchesJsonType([
+            'token' => 'string',
+            'userId' => 'integer'
+        ]);
     }
 
-    public function testGettingTokenByWrongUser(\FunctionalTester $I)
+    public function testAuthorizeByWrongUser(\FunctionalTester $I)
     {
         $I->have(User::class, [
             'firstName' => 'Dmitry',
@@ -55,7 +59,7 @@ class UserAuthorizeActionCest
         $I->seeResponseCodeIs(401);
     }
 
-    public function testGettingTokenWithWrongPassword(\FunctionalTester $I)
+    public function testAuthorizeWithWrongPassword(\FunctionalTester $I)
     {
         $I->have(User::class, [
             'firstName' => 'Dmitry',

@@ -27,19 +27,19 @@ class AccessTokenService
 
     /**
      * @param User $user
-     * @param AccessToken|null $model2
+     * @param AccessToken|null $modelOfToken
      * @return AccessToken|null
      * @throws \yii\base\Exception
      */
-    public function makeModelWithToken(User $user, $model2)
+    public function makeModelWithToken(User $user, $modelOfToken)
     {
-        if ($model2 == null) {
+        if ($modelOfToken == null) {
             $model = new AccessToken();
             $model->token = Yii::$app->security->generateRandomString();
             $model->userId = $user->userId;
             $model_final = $model;
-        } elseif ($model2->userId == $user->userId) {
-            $model2->token = Yii::$app->security->generateRandomString();
+        } elseif ($modelOfToken->userId == $user->userId) {
+            $modelOfToken->token = Yii::$app->security->generateRandomString();
             $model_final = $model2;
         }
         return (isset($model_final)) ? $model_final : null;
