@@ -11,7 +11,7 @@ namespace app\services;
 use app\models\AccessToken;
 use \app\models\User;
 use Yii;
-use yii\web\HttpException;
+use yii\base\Exception;
 
 class AccessTokenService
 {
@@ -43,8 +43,8 @@ class AccessTokenService
         }
 
         if (!$accessToken->save() && !$accessToken->hasErrors()) {
-            throw new HttpException(500,'Unknown server error');
+            throw new Exception('Can\'t save accessToken');
         }
-        return (isset($accessToken)) ? $accessToken : null;
+        return $accessToken;
     }
 }

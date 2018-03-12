@@ -14,6 +14,7 @@ use Yii;
 use yii\web\HttpException;
 use app\services\UserService;
 use app\services\AccessTokenService;
+use yii\base\Exception;
 
 class UserController extends ActiveController
 {
@@ -55,10 +56,15 @@ class UserController extends ActiveController
         }
 
         $accessToken = $this->accessTokenService->findAccessTokenByUserId($user);
-        $finalAccessToken = $this->accessTokenService->createOrUpdateAccessToken($user, $accessToken);
+
+        try {
+            $finalAccessToken = $this->accessTokenService->createOrUpdateAccessToken($user, $accessToken);
+        } catch (Exception $e) {
+            throw new HttpException(500, $e->getMessage());
+        }
 
         $response->setStatusCode(201);
 
-        return (isset($finalAccessToken)) ? $finalAccessToken : null;
+        return $finalAccessToken;
     }
 }
