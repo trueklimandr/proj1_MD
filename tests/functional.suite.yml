@@ -15,6 +15,7 @@ modules:
       - DataFactory:
           factories: tests/functional/factory
           depends: Yii2
+          cleanup: false
       - REST:
           depends: Yii2
           url: '/'
