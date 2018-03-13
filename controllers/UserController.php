@@ -8,7 +8,6 @@
 namespace app\controllers;
 
 use yii\base\Module;
-use yii\rest\ActiveController;
 use app\models\User;
 use Yii;
 use yii\web\HttpException;
@@ -16,7 +15,7 @@ use app\services\UserService;
 use app\services\AccessTokenService;
 use yii\base\Exception;
 
-class UserController extends ActiveController
+class UserController extends RestController
 {
     public $modelClass = User::class;
     private $userService;
@@ -32,6 +31,13 @@ class UserController extends ActiveController
         parent::__construct($id, $module, $config);
         $this->userService = $userService;
         $this->accessTokenService = $accessTokenService;
+    }
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator']['except'][] = 'create';
+        return $behaviors;
     }
 
     /**

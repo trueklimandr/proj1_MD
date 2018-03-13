@@ -7,6 +7,7 @@
  */
 
 use app\models\Doctor;
+use app\models\AccessToken;
 
 class DoctorIndexActionCest
 {
@@ -24,6 +25,9 @@ class DoctorIndexActionCest
 
     public function testGettingListOfZeroDocs(\FunctionalTester $I)
     {
+        $I->have(AccessToken::class);
+        $accessToken = AccessToken::find()->one();
+        $I->amHttpAuthenticated($accessToken['token'], '');
         $I->sendGET('doctors');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
@@ -33,6 +37,9 @@ class DoctorIndexActionCest
 
     public function testGettingListOfFiveDocs(\FunctionalTester $I)
     {
+        $I->have(AccessToken::class);
+        $accessToken = AccessToken::find()->one();
+        $I->amHttpAuthenticated($accessToken['token'], '');
         $I->haveMultiple(Doctor::class, 5);
         $I->sendGET('doctors');
         $I->seeResponseCodeIs(200);
