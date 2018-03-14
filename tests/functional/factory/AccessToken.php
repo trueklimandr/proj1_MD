@@ -15,5 +15,5 @@ $fm->define(AccessToken::class)->setDefinitions([
         $user = $fm->create(User::class, ['type' => 'user']);
         return $user->userId;
     },                                      // Set the userId attribute to userId of new user
-    'token' => Faker::password(32, 32),     // Set the spec attribute to a random job
+    'token' => Faker::password(32, 32),     // Set the token attribute to a random string length 32
 ]);
