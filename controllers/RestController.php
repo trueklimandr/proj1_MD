@@ -18,7 +18,6 @@ class RestController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::class,
-            'except' => ['authorize'],
         ];
         return $behaviors;
     }

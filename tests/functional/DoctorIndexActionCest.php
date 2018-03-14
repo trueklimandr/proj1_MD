@@ -6,23 +6,14 @@
  * Time: 11:31
  */
 
+namespace app\tests\functional;
+
 use app\models\Doctor;
 use app\models\AccessToken;
+use app\tests\functional\baseCest\BaseFunctionalCest;
 
-class DoctorIndexActionCest
+class DoctorIndexActionCest extends BaseFunctionalCest
 {
-    private $transaction;
-
-    public function _before()
-    {
-        $this->transaction = Yii::$app->db->beginTransaction();
-    }
-
-    public function _after()
-    {
-        $this->transaction->rollback();
-    }
-
     public function testGettingListOfZeroDocs(\FunctionalTester $I)
     {
         $I->have(AccessToken::class);

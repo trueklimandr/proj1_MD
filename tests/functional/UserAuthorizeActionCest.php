@@ -6,22 +6,13 @@
  * Time: 9:53
  */
 
+namespace app\tests\functional;
+
 use app\models\User;
+use app\tests\functional\baseCest\BaseFunctionalCest;
 
-class UserAuthorizeActionCest
+class UserAuthorizeActionCest extends BaseFunctionalCest
 {
-    private $transaction;
-
-    public function _before()
-    {
-        $this->transaction = Yii::$app->db->beginTransaction();
-    }
-
-    public function _after()
-    {
-        $this->transaction->rollback();
-    }
-
     public function testAuthorize(\FunctionalTester $I)
     {
         $I->have(User::class, [

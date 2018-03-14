@@ -36,7 +36,7 @@ class UserController extends RestController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator']['except'][] = 'create';
+        $behaviors['authenticator']['except'] = ['create', 'authorize'];
         return $behaviors;
     }
 

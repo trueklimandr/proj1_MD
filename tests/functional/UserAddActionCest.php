@@ -6,23 +6,14 @@
  * Time: 12:01
  */
 
+namespace app\tests\functional;
+
 use app\models\User;
 use app\models\AccessToken;
+use app\tests\functional\baseCest\BaseFunctionalCest;
 
-class UserAddActionCest
+class UserAddActionCest extends BaseFunctionalCest
 {
-    private $transaction;
-
-    public function _before()
-    {
-        $this->transaction = Yii::$app->db->beginTransaction();
-    }
-
-    public function _after()
-    {
-        $this->transaction->rollback();
-    }
-
     public function testAddNewUser(\FunctionalTester $I)
     {
         $I->sendPOST('users', [
