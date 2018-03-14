@@ -40,6 +40,20 @@ class UserController extends RestController
         return $behaviors;
     }
 
+    public function actions()
+    {
+        $actions = parent::actions();
+        // deactivate actions
+        unset(
+            $actions['index'],
+            $actions['view'],
+            $actions['update'],
+            $actions['delete']
+        );
+
+        return $actions;
+    }
+
     /**
      * Do authorization.
      * @return array|null|\yii\db\ActiveRecord created token and userId in model AccessToken or null
