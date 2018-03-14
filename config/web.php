@@ -21,7 +21,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableSession' => 'false',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -50,11 +50,13 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'doctor'
+                    'controller' => 'doctor',
+                    'except' => ['view', 'create', 'update', 'delete'],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'user',
+                    'except' => ['index', 'view', 'update', 'delete'],
                     'extraPatterns' => [
                         'POST authorize' => 'authorize',
                     ]

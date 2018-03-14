@@ -6,24 +6,19 @@
  * Time: 11:31
  */
 
+namespace app\tests\functional;
+
 use app\models\Doctor;
+use app\models\AccessToken;
+use app\tests\functional\baseCest\BaseFunctionalCest;
 
-class DoctorIndexActionCest
+class DoctorIndexActionCest extends BaseFunctionalCest
 {
-    private $transaction;
-
-    public function _before()
-    {
-        $this->transaction = Yii::$app->db->beginTransaction();
-    }
-
-    public function _after()
-    {
-        $this->transaction->rollback();
-    }
-
     public function testGettingListOfZeroDocs(\FunctionalTester $I)
     {
+        $I->have(AccessToken::class);
+        $accessToken = AccessToken::find()->one();
+        $I->amHttpAuthenticated($accessToken['token'], '');
         $I->sendGET('doctors');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
@@ -33,6 +28,9 @@ class DoctorIndexActionCest
 
     public function testGettingListOfFiveDocs(\FunctionalTester $I)
     {
+        $I->have(AccessToken::class);
+        $accessToken = AccessToken::find()->one();
+        $I->amHttpAuthenticated($accessToken['token'], '');
         $I->haveMultiple(Doctor::class, 5);
         $I->sendGET('doctors');
         $I->seeResponseCodeIs(200);
