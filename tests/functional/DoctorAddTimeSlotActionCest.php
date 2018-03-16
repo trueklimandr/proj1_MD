@@ -51,6 +51,7 @@ class DoctorAddTimeSlotActionCest extends BaseFunctionalCest
         $doctor = $I->have(Doctor::class);
         $accessToken = $I->have(AccessToken::class, ['userId' => $doctor->userId]);
         $I->amHttpAuthenticated($accessToken->token, '');
+        $I->amLoggedInAs($doctor->user);
         $timeSlot = $I->have(TimeSlot::class, [
             'doctorId' =>$doctor->doctorId,
             'start' => $example['start1'],

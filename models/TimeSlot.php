@@ -8,6 +8,7 @@
 
 namespace app\models;
 
+use app\services\TimeSlotService;
 use yii\db\ActiveRecord;
 use yii;
 
@@ -22,6 +23,15 @@ use yii;
  */
 class TimeSlot extends ActiveRecord
 {
+    private $timeSlotService;
+
+    public function init()
+    {
+        parent::init();
+
+        $this->timeSlotService = Yii::$container->get(TimeSlotService::class);
+    }
+
     public static function tableName()
     {
         return 'timeSlot';
@@ -59,29 +69,18 @@ class TimeSlot extends ActiveRecord
 
     public function validateSlot($attribute, $params)
     {
-        if (strtotime($this->start) >= strtotime($this->end)) {
+        if (!$this->timeSlotService->isStartBeforeEnd($this->start, $this->end)) {
             $this->addError($attribute, 'Start must be earlier than end.');
         }
-
-        $timeSlot = TimeSlot::find()->where(['doctorId' => $this->doctorId, 'date' => $this->date])->all();
-        foreach ($timeSlot as $item) {
-            if (!(strtotime($this->start) < strtotime($item['start']) &&
-                strtotime($this->end) <= strtotime($item['start'])) &&
-            !(strtotime($this->start) >= strtotime($item['end'])))
-            {
-                $this->addError($attribute, 'Your slot has confluence with existing one');
-            }
+        if ($this->timeSlotService->isConfluence($this)) {
+            $this->addError($attribute, 'Your slot has confluence with existing one');
         }
     }
 
     public function validateDoctor($attribute, $params)
     {
-        $identity = Yii::$app->user->identity;
-        if ($identity != null) {
-            $doctor = Doctor::find()->where(['userId' => $identity->getId()])->one();
-            if ($this->$attribute != $doctor['doctorId']) {
-                $this->addError($attribute, 'You can create new slot for yourself only.');
-            }
+        if (!$this->timeSlotService->isValidDoctor($this->$attribute)) {
+            $this->addError($attribute, 'You can create new slot for yourself only.');
         }
     }
 }

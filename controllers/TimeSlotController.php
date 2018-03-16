@@ -13,5 +13,4 @@ use app\models\TimeSlot;
 class TimeSlotController extends RestController
 {
     public $modelClass = TimeSlot::class;
-
 }
