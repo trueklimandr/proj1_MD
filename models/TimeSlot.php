@@ -83,15 +83,5 @@ class TimeSlot extends ActiveRecord
                 $this->addError($attribute, 'You can create new slot for yourself only.');
             }
         }
-
-        $timeSlot = TimeSlot::find()->where(['doctorId' => $this->doctorId, 'date' => $this->date])->all();
-        foreach ($timeSlot as $item) {
-            if (!(strtotime($this->start) < strtotime($item['start']) &&
-                    strtotime($this->end) <= strtotime($item['start'])) &&
-                !(strtotime($this->start) >= strtotime($item['end'])))
-            {
-                $this->addError($attribute, 'Your slot has confluence with existing one');
-            }
-        }
     }
 }
