@@ -31,4 +31,9 @@ class Doctor extends ActiveRecord
     {
         return $this->hasOne(User::class, ['userId' => 'userId']);
     }
+
+    public function getTimeSlots()
+    {
+        return $this->hasMany(TimeSlot::class, ['doctorId' => 'doctorId']);
+    }
 }

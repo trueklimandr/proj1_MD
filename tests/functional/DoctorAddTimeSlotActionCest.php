@@ -22,7 +22,7 @@ class DoctorAddTimeSlotActionCest extends BaseFunctionalCest
         $I->amHttpAuthenticated($accessToken->token, '');
         $I->sendPOST('time-slots', [
             'doctorId' => $doctor->doctorId,
-            'date' => '2018-03-18',
+            'date' => date('Y-m-d', strtotime('tomorrow')),
             'start' => '08:00:00',
             'end' => '15:00:00'
         ]);
@@ -38,24 +38,31 @@ class DoctorAddTimeSlotActionCest extends BaseFunctionalCest
             'end' => $response->end,
         ]);
     }
-
-    public function testAddIncorrectDueToIntersectionTimeSlot(\FunctionalTester $I)
+    /**
+     * @example(start1="08:00:00", end1="09:00:00", start2="10:00:00", end2="11:00:00", code="201")
+     * @example(start1="08:00:00", start2="09:00:00", end1="10:00:00", end2="11:00:00", code="422")
+     * @example(start1="08:00:00", start2="09:00:00", end2="10:00:00", end1="11:00:00", code="422")
+     * @example(start2="08:00:00", start1="09:00:00", end1="10:00:00", end2="11:00:00", code="422")
+     * @example(start2="08:00:00", start1="09:00:00", end2="10:00:00", end1="11:00:00", code="422")
+     * @example(start2="08:00:00", end2="09:00:00", start1="10:00:00", end1="11:00:00", code="201")
+     */
+    public function testAddIncorrectDueToIntersectionTimeSlot(\FunctionalTester $I, \Codeception\Example $example)
     {
         $doctor = $I->have(Doctor::class);
         $accessToken = $I->have(AccessToken::class, ['userId' => $doctor->userId]);
         $I->amHttpAuthenticated($accessToken->token, '');
         $timeSlot = $I->have(TimeSlot::class, [
             'doctorId' =>$doctor->doctorId,
-            'start' => '08:30:00',
-            'end' => '12:30:00'
+            'start' => $example['start1'],
+            'end' => $example['end1']
         ]);
         $I->sendPOST('time-slots', [
             'doctorId' => $timeSlot->doctorId,
             'date' => $timeSlot->date,
-            'start' => '10:25:00',
-            'end' => '15:00:00'
+            'start' => $example['start2'],
+            'end' => $example['end2']
         ]);
-        $I->seeResponseCodeIs(422);
+        $I->seeResponseCodeIs($example['code']);
     }
 
     public function testAddIncorrectPeriodOfTimeSlot(\FunctionalTester $I)
@@ -65,7 +72,7 @@ class DoctorAddTimeSlotActionCest extends BaseFunctionalCest
         $I->amHttpAuthenticated($accessToken->token, '');
         $I->sendPOST('time-slots', [
             'doctorId' => $doctor->doctorId,
-            'date' => '2018-03-18',
+            'date' => date('Y-m-d', strtotime('tomorrow')),
             'start' => '12:00:00',
             'end' => '09:00:00'
         ]);
@@ -80,7 +87,7 @@ class DoctorAddTimeSlotActionCest extends BaseFunctionalCest
         $I->amHttpAuthenticated($accessToken->token, '');
         $I->sendPOST('time-slots', [
             'doctorId' => $doctor2->doctorId,
-            'date' => '2018-03-18',
+            'date' => date('Y-m-d', strtotime('tomorrow')),
             'start' => '08:00:00',
             'end' => '15:00:00'
         ]);
