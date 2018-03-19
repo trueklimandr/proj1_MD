@@ -32,6 +32,9 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function beforeSave($insert)
     {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
         if ($this->isNewRecord) {
             $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
         }
@@ -44,26 +47,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [
-                [
-                    'firstName',
-                    'lastName',
-                    'email',
-                    'password',
-                    'type'
-                ],
-                'safe'
-            ],
-            [
-                [
-                    'firstName',
-                    'lastName',
-                    'email',
-                    'password',
-                    'type'
-                ],
-                'required'
-            ],
+            [['firstName', 'lastName', 'email', 'password', 'type'], 'safe'],
+            [['firstName', 'lastName', 'email', 'password', 'type'], 'required'],
             ['type', 'in', 'range' => ['user', 'doctor']],
             ['email', 'email'],
             ['email', 'unique']
@@ -95,9 +80,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        $accessToken = AccessToken::find()
-            ->where(['token' => $token])
-            ->one();
+        $accessToken = AccessToken::find()->where(['token' => $token])->one();
         return static::findOne(['userId' => $accessToken['userId']]);
     }
 

@@ -22,13 +22,18 @@ class Doctor extends ActiveRecord
     public function rules()
     {
         return [
-            ['specialization', 'safe'],
-            ['specialization', 'required'],
+            [['specialization', 'userId'], 'safe'],
+            [['specialization', 'userId'], 'required'],
         ];
     }
 
     public function getUser()
     {
         return $this->hasOne(User::class, ['userId' => 'userId']);
+    }
+
+    public function getTimeSlots()
+    {
+        return $this->hasMany(TimeSlot::class, ['doctorId' => 'doctorId']);
     }
 }

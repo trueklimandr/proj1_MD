@@ -60,6 +60,11 @@ $config = [
                     'extraPatterns' => [
                         'POST authorize' => 'authorize',
                     ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'time-slot',
+                    'only' => ['index', 'create', 'delete', 'options'],
                 ]
             ],
         ],
